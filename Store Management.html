@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtPOS - Store Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f0f0;
+            background-image: url('assets/image/logo.jfif');
+            opacity: 1.9;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 5px;
+        }
+        header {
+            background: rgba(53, 66, 74, 0.9);
+            color: #ffffff;
+            padding: 20px 0;
+            border-bottom: #e8491d 3px solid;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .Logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        header p {
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        nav {
+            background: rgba(53, 66, 74, 0.8);
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+        nav ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+        nav li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav a:hover {
+            background-color: #e8491d;
+        }
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #35424a;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background: #1e87db;
+            transform: scale(1.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #35424a;
+            color: white;
+        }
+        .btn-edit, .btn-delete {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-edit {
+            background-color: #FF9800;
+            color: white;
+            margin-right: 5px;
+        }
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-edit:hover {
+            background-color: #e68a00;
+        }
+        .btn-delete:hover {
+            background-color: #da190b;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(53, 66, 74, 0.9);
+            color: #ffffff;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                width: 95%;
+            }
+            nav li {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <img class="Logo" src="assets/image/logo 2.jfif" />
+        <h1>ArtPOS</h1>
+        <p>Artistic Point of Sale System</p>
+    </div>
+</header>
+
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="Main Page.html">Home</a></li>
+            <li><a href="Customer Management.html">Manage Customers</a></li>
+            <li><a href="Store Management.html">Manage Store</a></li>
+            <li><a href="Order Management.html">Manage Orders</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container">
+    <!-- Add Item Form -->
+    <section class="card">
+        <h2>Add Item</h2>
+        <form id="add-item-form">
+            <input type="text" id="item-name" placeholder="Item Name" required>
+            <input type="number" id="item-price" placeholder="Price" step="0.01" min="0" required>
+            <input type="number" id="item-quantity" placeholder="Quantity" min="0" required>
+            <button type="submit">Add Item</button>
+        </form>
+    </section>
+
+    <!-- Search Item Form -->
+    <section class="card">
+        <h2>Search Item</h2>
+        <form id="search-item-form">
+            <input type="text" id="search-item" placeholder="Search by item name">
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <!-- Inventory Table -->
+    <section class="card">
+        <h2>Inventory</h2>
+        <table id="inventory-table">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 ArtPOS - Empowering Art Businesses</p>
+    </div>
+</footer>
+
+<script>
+    const inventory = [];
+
+    document.getElementById('add-item-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('item-name').value;
+        const price = document.getElementById('item-price').value;
+        const quantity = document.getElementById('item-quantity').value;
+
+        const newItem = { name, price: parseFloat(price).toFixed(2), quantity };
+        inventory.push(newItem);
+        renderInventory();
+
+        this.reset();
+    });
+
+    document.getElementById('inventory-table').addEventListener('click', function(e) {
+        const rowIndex = e.target.closest('tr').rowIndex - 1;
+        if (e.target.classList.contains('btn-edit')) {
+            editItem(rowIndex);
+        } else if (e.target.classList.contains('btn-delete')) {
+            inventory.splice(rowIndex, 1);
+            renderInventory();
+        }
+    });
+
+    function renderInventory(items = inventory) {
+        const tableBody = document.querySelector('#inventory-table tbody');
+        tableBody.innerHTML = '';
+        items.forEach((item, index) => {
+            const row = `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>$${item.price}</td>
+                    <td>${item.quantity}</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </td>
+                </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+
+    function editItem(index) {
+        const item = inventory[index];
+        document.getElementById('item-name').value = item.name;
+        document.getElementById('item-price').value = item.price;
+        document.getElementById('item-quantity').value = item.quantity;
+        inventory.splice(index, 1);
+    }
+
+
+    document.getElementById('search-item-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const searchTerm = document.getElementById('search-item').value.toLowerCase();
+        const filteredInventory = inventory.filter(item => item.name.toLowerCase().includes(searchTerm));
+        renderInventory(filteredInventory);
+    });
+
+
+    renderInventory();
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtPOS - Artistic Point of Sale System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+        height: 100%;
+      }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f0f0f0;
+      background-image: url('assets/image/logo.jfif');
+      opacity: 1.9;
+      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      justify-content: space-between;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      overflow: hidden;
+      padding: 5px;
+    }
+    header {
+      background: rgba(53, 66, 74, 0.9);
+      color: #ffffff;
+      padding: 20px 0;
+      border-bottom: #e8491d 3px solid;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .Logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    header p {
+      font-size: 1.2em;
+      font-style: italic;
+    }
+    nav {
+      background: rgba(53, 66, 74, 0.8);
+      padding: 20px 0;
+      margin-bottom: 40px;
+    }
+    nav ul {
+      padding: 0;
+      list-style: none;
+      text-align: center;
+    }
+    nav li {
+      display: inline-block;
+      margin: 0 10px;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav a:hover {
+      background-color: #e8491d;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      flex-grow: 1;
+    }
+    .welcome-section {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .welcome-section h2 {
+      color: #35424a;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    .welcome-section p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+    }
+    .feature-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      text-align: center;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    .feature-card h3 {
+      color: #35424a;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+    .feature-card p {
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+      margin: 10px;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+    }
+    .btn-customer { background-color: #4CAF50; color: white; }
+    .btn-store { background-color: #2196F3; color: white; }
+    .btn-order { background-color: #FF9800; color: white; }
+    .btn-customer:hover { background-color: #45a049; }
+    .btn-store:hover { background-color: #1e87db; }
+    .btn-order:hover { background-color: #e68a00; }
+    .icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(53, 66, 74, 0.9);
+      color: #ffffff;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      main { grid-template-columns: 1fr; }
+      .container { width: 95%; }
+      nav li { display: block; margin: 10px 0; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <img class="Logo" src="assets/image/logo 2.jfif" />
+    <h1>ArtPOS</h1>
+    <p>Artistic Point of Sale System</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <ul>
+      <li><a href="Main Page.html">Home</a></li>
+      <li><a href="Customer Management.html">Manage Customers</a></li>
+      <li><a href="Store Management.html">Manage Store</a></li>
+      <li><a href="Order Management.html">Manage Orders</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="welcome-section">
+    <h2>Welcome to ArtPOS</h2>
+    <p>Streamline your art store operations with our intuitive and powerful point of sale system. ArtPOS is designed to help you manage customers, inventory, and orders with ease, allowing you to focus on what matters most - your art and customers.</p>
+  </section>
+
+  <section class="feature-card">
+    <div class="icon">👥</div>
+    <h3>Customer Management</h3>
+    <p>Easily register new customers, update their information, and keep track of their purchase history. Build lasting relationships with your clientele.</p>
+    <a href="Customer Management.html" class="btn btn-customer">Manage Customers</a>
+  </section>
+
+  <section class="feature-card">
+    <div class="icon">🎨</div>
+    <h3>Store Management</h3>
+    <p>Keep your inventory organized and up-to-date. Add new items, track stock levels, and manage pricing with just a few clicks.</p>
+    <a href="Store Management.html" class="btn btn-store">Manage Store</a>
+  </section>
+
+  <section class="feature-card">
+    <div class="icon">📦</div>
+    <h3>Order Management</h3>
+    <p>Process orders quickly and efficiently. View order history, update statuses, and generate invoices all in one place.</p>
+    <a href="Order Management.html" class="btn btn-order">Manage Orders</a>
+  </section>
+
+  <section class="feature-card">
+    <div class="icon">📊</div>
+    <h3>Insights and Reporting</h3>
+    <p>Gain valuable insights into your business performance with our comprehensive reporting tools. Track sales, popular items, and customer trends.</p>
+    <a href="#" class="btn btn-customer">View Reports</a>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 ArtPOS - Empowering Art Businesses</p>
+  </div>
+</footer>
+</body>
+</html>

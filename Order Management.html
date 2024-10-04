@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtPOS - Order Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f0f0;
+            background-image: url('assets/image/logo.jfif');
+            opacity: 1.9;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: rgba(53, 66, 74, 0.9);
+            color: #ffffff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+            text-align: center;
+        }
+        header h1 {
+            padding-bottom: 20px;
+            text-align: center;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .Logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        nav {
+            background: rgba(53, 66, 74, 0.8);
+            padding: 20px 0;
+        }
+        nav ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+        nav li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav a:hover {
+            background-color: #e8491d;
+        }
+        main {
+            padding: 40px 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin-bottom: 20px;
+            color: #35424a;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background: #FF9800;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background: #e68a00;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #35424a;
+            color: white;
+        }
+        .btn-view { background-color: #4CAF50; }
+        .btn-edit { background-color: #2196F3; }
+        .btn-delete { background-color: #f44336; }
+        .btn-view:hover { background-color: #45a049; }
+        .btn-edit:hover { background-color: #1e87db; }
+        .btn-delete:hover { background-color: #da190b; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(53, 66, 74, 0.9);
+            color: #ffffff;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container { width: 95%; }
+            nav li { display: block; margin: 10px 0; }
+            table { font-size: 14px; }
+            .btn-view, .btn-edit, .btn-delete { padding: 8px 12px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <img class="Logo" src="assets/image/logo 2.jfif" />
+        <h1>ArtPOS</h1>
+        <p>Artistic Point of Sale System</p>
+    </div>
+</header>
+
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="Main Page.html">Home</a></li>
+            <li><a href="Customer Management.html">Manage Customers</a></li>
+            <li><a href="Store Management.html">Manage Store</a></li>
+            <li><a href="Order Management.html">Manage Orders</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container">
+    <section class="card">
+        <h2>Place New Order</h2>
+        <form id="order-form">
+            <select id="customer" required>
+                <option value="">Select Customer</option>
+                <option value="John Doe">John Doe</option>
+                <option value="Jane Smith">Jane Smith</option>
+            </select>
+            <select id="item" required>
+                <option value="">Select Item</option>
+                <option value="Art Canvas">Art Canvas</option>
+                <option value="Oil Paints Set">Oil Paints Set</option>
+            </select>
+            <input type="number" id="quantity" placeholder="Quantity" required min="1">
+            <button type="submit">Place Order</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Search Orders</h2>
+        <input type="text" id="search" placeholder="Search by customer name">
+    </section>
+
+    <section class="card">
+        <h2>Order List</h2>
+        <table id="order-table">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <div class="container">
+        <p>&copy; 2024 ArtPOS - Empowering Art Businesses</p>
+    </div>
+</footer>
+
+<script>
+    let orders = [];
+    let orderId = 1;
+
+    // Function to add new order
+    document.getElementById('order-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const customer = document.getElementById('customer').value;
+        const item = document.getElementById('item').value;
+        const quantity = document.getElementById('quantity').value;
+        const price = item === 'Art Canvas' ? 29.99 : 19.99;
+        const total = (price * quantity).toFixed(2);
+
+        const newOrder = {
+            id: orderId++,
+            customer,
+            item,
+            quantity,
+            total
+        };
+        orders.push(newOrder);
+        renderOrders();
+        this.reset();
+    });
+
+    // Function to render orders in table
+    function renderOrders(searchTerm = '') {
+        const orderTable = document.getElementById('order-table').querySelector('tbody');
+        orderTable.innerHTML = '';
+
+        orders.filter(order => order.customer.toLowerCase().includes(searchTerm.toLowerCase())).forEach(order => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>#${order.id}</td>
+                <td>${order.customer}</td>
+                <td>${order.item} (${order.quantity})</td>
+                <td>$${order.total}</td>
+                <td>
+                    <button class="btn-edit" onclick="editOrder(${order.id})">Edit</button>
+                    <button class="btn-delete" onclick="deleteOrder(${order.id})">Delete</button>
+                </td>
+            `;
+            orderTable.appendChild(row);
+        });
+    }
+
+    // Search functionality
+    document.getElementById('search').addEventListener('input', function() {
+        const searchTerm = this.value;
+        renderOrders(searchTerm);
+    });
+
+    // Delete order functionality
+    function deleteOrder(id) {
+        orders = orders.filter(order => order.id !== id);
+        renderOrders();
+    }
+
+    // Edit order functionality (simple example)
+    function editOrder(id) {
+        const order = orders.find(order => order.id === id);
+        document.getElementById('customer').value = order.customer;
+        document.getElementById('item').value = order.item;
+        document.getElementById('quantity').value = order.quantity;
+
+        deleteOrder(id);  // Remove the order so it can be edited
+    }
+
+    // Initial render
+    renderOrders();
+</script>
+</body>
+</html>
