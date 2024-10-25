@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORION POS System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .section { display: none; } /* Hide all sections initially */
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">ORION POS System</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('home')">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('orders')">Orders</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('items')">Items</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">Others</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" onclick="showSection('customers')">Customers</a>
+                    <a class="dropdown-item" href="#" onclick="showSection('employees')">Employees</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section">
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Home</h5>
+            </div>
+            <div class="card-body">
+                <p>Welcome to the ORION POS System. Use the navigation menu to explore the system.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Orders Section -->
+    <section id="orders" class="section">
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Orders</h5>
+            </div>
+            <div class="card-body">
+                <h6>Customer Details</h6>
+                <form id="customerDetailsForm" class="mb-4">
+                    <div class="form-group">
+                        <label for="customerName">Customer Name</label>
+                        <input type="text" class="form-control" id="customerName" placeholder="Enter customer name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerEmail">Email</label>
+                        <input type="email" class="form-control" id="customerEmail" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">Phone</label>
+                        <input type="text" class="form-control" id="customerPhone" placeholder="Enter phone number" required>
+                    </div>
+                </form>
+
+                <h6>Item Selection</h6>
+                <form id="itemSelectionForm" class="mb-4">
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <select class="form-control" id="itemSelect" onchange="updateItemDetails()">
+                                <option value="">Select Item</option>
+                                <option value="1" data-name="Item A" data-price="10">Item A - $10</option>
+                                <option value="2" data-name="Item B" data-price="15">Item B - $15</option>
+                                <option value="3" data-name="Item C" data-price="20">Item C - $20</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" id="itemQuantity" placeholder="Quantity" min="1" value="1" required>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mt-2" onclick="addItemToOrder()">Add to Order</button>
+                </form>
+
+                <h6>Invoice Details</h6>
+                <div id="invoiceDetails" class="mb-4">
+                    <h5>Order Summary</h5>
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="invoiceTable">
+                        <!-- Dynamic Invoice Items -->
+                        </tbody>
+                    </table>
+                    <h5>Total Amount: $<span id="totalAmount">0</span></h5>
+                </div>
+
+                <button type="button" class="btn btn-success" onclick="placeOrder()">Place Order</button>
+
+                <!-- Orders Table -->
+                <h6>Previous Orders</h6>
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Items</th>
+                        <th>Total Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody id="ordersTable">
+                    <!-- Orders will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Items Section -->
+    <section id="items" class="section">
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Items</h5>
+            </div>
+            <div class="card-body">
+                <form id="itemSearchForm" class="mb-4">
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="itemSearch" placeholder="Input Item Name/Code Here">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" id="searchBy">
+                                <option value="name">Name</option>
+                                <option value="code">Code</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success mt-2" onclick="searchItem()">Search</button>
+                    <button type="button" class="btn btn-secondary mt-2" onclick="clearSearch()">Clear</button>
+                </form>
+
+                <!-- Table of Items -->
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="itemsTable">
+                    <tr>
+                        <td>Example Item</td>
+                        <td>$10</td>
+                        <td>50</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" onclick="viewDetails()">Details</button>
+                            <button class="btn btn-warning btn-sm" onclick="editItem()">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteItem()">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- Buttons for Add Item -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">New Item</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customers Section -->
+    <section id="customers" class="section">
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Customers</h5>
+            </div>
+            <div class="card-body">
+                <form id="customerSearchForm" class="mb-4">
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="customerSearch" placeholder="Search Customer">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-success mt-2" onclick="searchCustomer()">Search</button>
+                            <button type="button" class="btn btn-secondary mt-2" onclick="clearCustomerSearch()">Clear</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Table of Customers -->
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="customersTable">
+                    <!-- Customers will be dynamically added here -->
+                    </tbody>
+                </table>
+
+                <!-- Buttons for Add Customer -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCustomerModal">New Customer</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals for Adding Items and Customers -->
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addItemForm">
+                        <div class="form-group">
+                            <label for="itemName">Item Name</label>
+                            <input type="text" class="form-control" id="itemName" placeholder="Enter item name">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemPrice">Price</label>
+                            <input type="number" class="form-control" id="itemPrice" placeholder="Enter item price" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemQuantity">Quantity</label>
+                            <input type="number" class="form-control" id="itemQuantity" placeholder="Enter item quantity" min="0">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addItem()">Add Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCustomerForm">
+                        <div class="form-group">
+                            <label for="customerName">Customer Name</label>
+                            <input type="text" class="form-control" id="customerName" placeholder="Enter customer name">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerEmail">Email</label>
+                            <input type="text" class="form-control" id="customerEmail" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerPhone">Phone</label>
+                            <input type="text" class="form-control" id="customerPhone" placeholder="Enter phone number">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addCustomer()">Add Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Show the respective section and hide others
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(function(section) {
+            section.style.display = 'none';
+        });
+        document.getElementById(sectionId).style.display = 'block';
+    }
+
+    // Initially show the Home section
+    showSection('home');
+
+    let orderItems = [];
+    let totalAmount = 0;
+
+    // Update item details when an item is selected
+    function updateItemDetails() {
+        const itemSelect = document.getElementById('itemSelect');
+        const selectedOption = itemSelect.options[itemSelect.selectedIndex];
+        const price = selectedOption.dataset.price;
+        document.getElementById('itemPrice').value = price;
+    }
+
+    // Add item to order
+    function addItemToOrder() {
+        const itemSelect = document.getElementById('itemSelect');
+        const selectedOption = itemSelect.options[itemSelect.selectedIndex];
+        const itemName = selectedOption.dataset.name;
+        const quantity = parseInt(document.getElementById('itemQuantity').value);
+        const price = parseFloat(selectedOption.dataset.price);
+        const itemTotal = quantity * price;
+
+        // Create order item
+        const orderItem = {
+            name: itemName,
+            quantity: quantity,
+            price: price,
+            total: itemTotal
+        };
+
+        // Add to order items and update total
+        orderItems.push(orderItem);
+        totalAmount += itemTotal;
+
+        // Update invoice table
+        updateInvoiceTable();
+        document.getElementById('itemQuantity').value = 1; // Reset quantity
+    }
+
+    // Update invoice table with current order items
+    function updateInvoiceTable() {
+        const invoiceTable = document.getElementById('invoiceTable');
+        invoiceTable.innerHTML = ''; // Clear previous entries
+
+        orderItems.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>$${item.price.toFixed(2)}</td>
+                <td>$${item.total.toFixed(2)}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="removeItemFromOrder('${item.name}')">Remove</button></td>
+            `;
+            invoiceTable.appendChild(row);
+        });
+
+        // Update total amount display
+        document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+    }
+
+    // Remove item from order
+    function removeItemFromOrder(itemName) {
+        orderItems = orderItems.filter(item => item.name !== itemName);
+        totalAmount -= orderItems.find(item => item.name === itemName).total; // Update total amount
+        updateInvoiceTable();
+    }
+
+    // Place order function
+    function placeOrder() {
+        const customerName = document.getElementById('customerName').value;
+        const customerEmail = document.getElementById('customerEmail').value;
+        const customerPhone = document.getElementById('customerPhone').value;
+
+        if (customerName && customerEmail && customerPhone && orderItems.length > 0) {
+            const ordersTable = document.getElementById('ordersTable');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${customerName}</td>
+                <td>${orderItems.map(item => `${item.name} (x${item.quantity})`).join(', ')}</td>
+                <td>$${totalAmount.toFixed(2)}</td>
+            `;
+            ordersTable.appendChild(row);
+
+            // Reset forms and clear order items
+            document.getElementById('customerDetailsForm').reset();
+            document.getElementById('itemSelectionForm').reset();
+            orderItems = [];
+            totalAmount = 0;
+            updateInvoiceTable();
+        } else {
+            alert('Please fill all fields and add at least one item.');
+        }
+    }
+
+    // Add Item Functionality
+    function addItem() {
+        const itemName = document.getElementById('itemName').value;
+        const itemPrice = parseFloat(document.getElementById('itemPrice').value);
+        const itemQuantity = parseInt(document.getElementById('itemQuantity').value);
+
+        if (itemName && !isNaN(itemPrice) && !isNaN(itemQuantity)) {
+            const table = document.getElementById('itemsTable');
+            const row = table.insertRow();
+            row.innerHTML = `<td>${itemName}</td><td>$${itemPrice.toFixed(2)}</td><td>${itemQuantity}</td><td>
+                                <button class="btn btn-info btn-sm" onclick="viewDetails()">Details</button>
+                                <button class="btn btn-warning btn-sm" onclick="editItem()">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteItem()">Delete</button>
+                            </td>`;
+            $('#addItemModal').modal('hide');
+        } else {
+            alert('Please fill all fields correctly.');
+        }
+    }
+
+    // Customer functionality
+    function addCustomer() {
+        const customerName = document.getElementById('customerName').value;
+        const customerEmail = document.getElementById('customerEmail').value;
+        const customerPhone = document.getElementById('customerPhone').value;
+
+        if (customerName && customerEmail && customerPhone) {
+            const table = document.getElementById('customersTable');
+            const row = table.insertRow();
+            row.innerHTML = `<td>${customerName}</td><td>${customerEmail}</td><td>${customerPhone}</td><td>
+                                <button class="btn btn-info btn-sm" onclick="viewCustomerDetails()">Details</button>
+                                <button class="btn btn-warning btn-sm" onclick="editCustomer()">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteCustomer()">Delete</button>
+                            </td>`;
+            $('#addCustomerModal').modal('hide');
+        } else {
+            alert('Please fill all fields correctly.');
+        }
+    }
+
+    // Placeholder functions for future functionality
+    function searchItem() { /* Implement search functionality */ }
+    function clearSearch() { /* Clear search input */ }
+    function viewDetails() { /* View item details */ }
+    function editItem() { /* Edit item */ }
+    function deleteItem() { /* Delete item */ }
+    function searchCustomer() { /* Implement customer search */ }
+    function clearCustomerSearch() { /* Clear customer search input */ }
+    function viewCustomerDetails() { /* View customer details */ }
+    function editCustomer() { /* Edit customer */ }
+    function deleteCustomer() { /* Delete customer */ }
+
+</script>
+
+</body>
+</html>
